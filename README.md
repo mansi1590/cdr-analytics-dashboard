@@ -1,16 +1,131 @@
-# React + Vite
+# 📊 CDR Analytics Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive Call Detail Record (CDR) Analytics Dashboard built using React.
+## Live Demo
+https://cdr-analytics-dashboard-jet.vercel.app/
 
-Currently, two official plugins are available:
+## GitHub Repository
+https://github.com/mansi1590/cdr-analytics-dashboard
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- KPI Analytics Cards
+- Interactive Charts & Visualizations
+- Dark / Light Mode Toggle
+- Search & Filtering
+- Pagination Support
+- Responsive Dashboard UI
+- Call Duration & Cost Analytics
+- Calls By City Analysis
+- Timeline Based Analytics
+- Recent Call Logs Table
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- React.js
+- Vite
+- Tailwind CSS
+- Recharts
+- Lucide React Icons
+- shadcn/ui Components
+
+---
+
+## 📷 Dashboard Modules
+
+### KPI Overview
+- Total Calls
+- Total Cost
+- Average Duration
+- Successful Calls
+- Failed Calls
+
+### Analytics Sections
+- Call Duration Distribution
+- Call Cost Analytics
+- Call Activity Timeline
+- Calls By City
+
+### Table Features
+- Pagination
+- Search
+- Status Filter
+- Direction Filter
+- Records Per Page Selector
+
+---
+
+## ⚙️ Installation
+
+Clone repository:
+
+```bash
+git clone https://github.com/mansi1590/cdr-analytics-dashboard.git
+```
+
+Navigate to project:
+
+```bash
+cd cdr-analytics-dashboard
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run locally:
+
+```bash
+npm run dev
+```
+
+Build project:
+
+```bash
+npm run build
+```
+
+---
+
+## 🌐 Deployment
+
+This project is deployed on Vercel.
+
+Live URL:
+https://cdr-analytics-dashboard-jet.vercel.app/
+
+---
+
+## 📁 Project Structure
+
+```text
+src/
+ ├── components/
+ ├── hooks/
+ ├── lib/
+ ├── services/
+ ├── App.jsx
+ └── main.jsx
+```
+
+---
+
+## 🎯 Learning Outcomes
+
+This project helped in practicing:
+
+- React component architecture
+- State management with hooks
+- Dashboard UI design
+- Data visualization
+- Responsive layouts
+- Pagination & filtering
+- Dark mode implementation
+- Deployment workflow with GitHub & Vercel
+
