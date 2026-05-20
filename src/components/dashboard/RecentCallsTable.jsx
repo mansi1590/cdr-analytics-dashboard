@@ -111,7 +111,35 @@ export function RecentCallsTable({ data }) {
             <option value={50}>50 per page</option>
           </select>
         </div>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mt-4">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Showing {sortedCalls.length === 0 ? 0 : startIndex + 1} to{" "}
+            {Math.min(startIndex + recordsPerPage, sortedCalls.length)} of{" "}
+            {sortedCalls.length} records
+          </p>
 
+          <div className="flex items-center gap-2">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+              className="px-3 py-1 border rounded-md disabled:opacity-50 dark:border-slate-700"
+            >
+              Previous
+            </button>
+
+            <span className="px-3 py-1 text-sm">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              className="px-3 py-1 border rounded-md disabled:opacity-50 dark:border-slate-700"
+            >
+              Next
+            </button>
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -181,35 +209,7 @@ export function RecentCallsTable({ data }) {
           </Table>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mt-4">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            Showing {sortedCalls.length === 0 ? 0 : startIndex + 1} to{" "}
-            {Math.min(startIndex + recordsPerPage, sortedCalls.length)} of{" "}
-            {sortedCalls.length} records
-          </p>
 
-          <div className="flex items-center gap-2">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((prev) => prev - 1)}
-              className="px-3 py-1 border rounded-md disabled:opacity-50 dark:border-slate-700"
-            >
-              Previous
-            </button>
-
-            <span className="px-3 py-1 text-sm">
-              Page {currentPage} of {totalPages}
-            </span>
-
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              className="px-3 py-1 border rounded-md disabled:opacity-50 dark:border-slate-700"
-            >
-              Next
-            </button>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
