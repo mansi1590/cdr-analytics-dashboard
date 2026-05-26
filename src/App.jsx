@@ -1,7 +1,7 @@
 import { Moon, Sun, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCDRData } from "./hooks/useCDRData";
-import Login from "./pages/Login";
+import Login from "./Pages/Login";
 
 import {
   calculateKPIs,
