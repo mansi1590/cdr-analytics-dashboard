@@ -22,6 +22,9 @@ export function RecentCallsTable({ data }) {
   const filteredCalls = data.filter((call) => {
     const search = searchText.toLowerCase();
 
+    const callStatus = Number(call.callStatus);
+    const callDirection = Number(call.callDirection);
+
     const matchesSearch =
       call.callerName?.toLowerCase().includes(search) ||
       call.callerNumber?.toLowerCase().includes(search) ||
@@ -30,13 +33,13 @@ export function RecentCallsTable({ data }) {
 
     const matchesStatus =
       statusFilter === "all" ||
-      (statusFilter === "success" && call.callStatus) ||
-      (statusFilter === "failed" && !call.callStatus);
+      (statusFilter === "success" && callStatus === 1) ||
+      (statusFilter === "failed" && callStatus === 0);
 
     const matchesDirection =
       directionFilter === "all" ||
-      (directionFilter === "incoming" && call.callDirection) ||
-      (directionFilter === "outgoing" && !call.callDirection);
+      (directionFilter === "incoming" && callDirection === 1) ||
+      (directionFilter === "outgoing" && callDirection === 0);
 
     return matchesSearch && matchesStatus && matchesDirection;
   });
@@ -111,6 +114,7 @@ export function RecentCallsTable({ data }) {
             <option value={50}>50 per page</option>
           </select>
         </div>
+
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mt-4">
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Showing {sortedCalls.length === 0 ? 0 : startIndex + 1} to{" "}
@@ -140,7 +144,8 @@ export function RecentCallsTable({ data }) {
             </button>
           </div>
         </div>
-        <div className="overflow-x-auto">
+
+        <div className="overflow-x-auto mt-4">
           <Table>
             <TableHeader>
               <TableRow>
@@ -157,59 +162,62 @@ export function RecentCallsTable({ data }) {
             </TableHeader>
 
             <TableBody>
-              {paginatedCalls.map((call) => (
-                <TableRow key={call.id}>
-                  <TableCell>
-                    {call.callDirection ? (
-                      <ArrowDownLeft className="h-4 w-4 text-green-600" />
-                    ) : (
-                      <ArrowUpRight className="h-4 w-4 text-blue-600" />
-                    )}
-                  </TableCell>
+              {paginatedCalls.map((call) => {
+                const callStatus = Number(call.callStatus);
+                const callDirection = Number(call.callDirection);
 
-                  <TableCell className="font-medium">
-                    {call.callerName}
-                  </TableCell>
+                return (
+                  <TableRow key={call.id}>
+                    <TableCell>
+                      {callDirection === 1 ? (
+                        <ArrowDownLeft className="h-4 w-4 text-green-600" />
+                      ) : (
+                        <ArrowUpRight className="h-4 w-4 text-blue-600" />
+                      )}
+                    </TableCell>
 
-                  <TableCell className="text-slate-600 dark:text-slate-300">
-                    {call.callerNumber}
-                  </TableCell>
+                    <TableCell className="font-medium">
+                      {call.callerName}
+                    </TableCell>
 
-                  <TableCell className="text-slate-600 dark:text-slate-300">
-                    {call.receiverNumber}
-                  </TableCell>
+                    <TableCell className="text-slate-600 dark:text-slate-300">
+                      {call.callerNumber}
+                    </TableCell>
 
-                  <TableCell>{call.city}</TableCell>
+                    <TableCell className="text-slate-600 dark:text-slate-300">
+                      {call.receiverNumber}
+                    </TableCell>
 
-                  <TableCell>{formatDuration(call.callDuration)}</TableCell>
+                    <TableCell>{call.city}</TableCell>
 
-                  <TableCell className="font-medium">
-                    ${call.callCost}
-                  </TableCell>
+                    <TableCell>{formatDuration(call.callDuration)}</TableCell>
 
-                  <TableCell>
-                    <Badge
-                      variant={call.callStatus ? "default" : "destructive"}
-                      className={
-                        call.callStatus
-                          ? "bg-green-100 text-green-800 hover:bg-green-100"
-                          : "bg-red-100 text-red-800 hover:bg-red-100"
-                      }
-                    >
-                      {call.callStatus ? "Success" : "Failed"}
-                    </Badge>
-                  </TableCell>
+                    <TableCell className="font-medium">
+                      ${Number(call.callCost).toFixed(2)}
+                    </TableCell>
 
-                  <TableCell className="text-slate-600 dark:text-slate-300">
-                    {formatDateTime(call.callStartTime)}
-                  </TableCell>
-                </TableRow>
-              ))}
+                    <TableCell>
+                      <Badge
+                        variant={callStatus === 1 ? "default" : "destructive"}
+                        className={
+                          callStatus === 1
+                            ? "bg-green-100 text-green-800 hover:bg-green-100"
+                            : "bg-red-100 text-red-800 hover:bg-red-100"
+                        }
+                      >
+                        {callStatus === 1 ? "Success" : "Failed"}
+                      </Badge>
+                    </TableCell>
+
+                    <TableCell className="text-slate-600 dark:text-slate-300">
+                      {formatDateTime(call.callStartTime)}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
-
-
       </CardContent>
     </Card>
   );
