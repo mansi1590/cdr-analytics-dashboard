@@ -1,6 +1,7 @@
 import { Moon, Sun, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCDRData } from "./hooks/useCDRData";
+import Login from "./pages/Login";
 
 import {
   calculateKPIs,
@@ -23,12 +24,25 @@ import {
 } from "./components/dashboard";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("token")
+  );
+
   const { data, loading, error, refetch } = useCDRData();
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
+
+  if (!isLoggedIn) {
+    return <Login onLogin={() => setIsLoggedIn(true)} />;
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
 
   const pageClass =
     "min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white p-4 md:p-6 transition-colors duration-300";
@@ -43,6 +57,7 @@ function App() {
           onRefresh={refetch}
           darkMode={darkMode}
           setDarkMode={setDarkMode}
+          onLogout={handleLogout}
         />
         <LoadingSkeleton />
       </div>
@@ -57,6 +72,7 @@ function App() {
           onRefresh={refetch}
           darkMode={darkMode}
           setDarkMode={setDarkMode}
+          onLogout={handleLogout}
         />
         <ErrorDisplay message={error} onRetry={refetch} />
       </div>
@@ -76,6 +92,7 @@ function App() {
         onRefresh={refetch}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
+        onLogout={handleLogout}
       />
 
       <section className="mb-6">
@@ -107,7 +124,13 @@ function App() {
   );
 }
 
-function HeaderActions({ lastUpdated, onRefresh, darkMode, setDarkMode }) {
+function HeaderActions({
+  lastUpdated,
+  onRefresh,
+  darkMode,
+  setDarkMode,
+  onLogout,
+}) {
   return (
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
       <DashboardHeader />
@@ -126,6 +149,13 @@ function HeaderActions({ lastUpdated, onRefresh, darkMode, setDarkMode }) {
         </button>
 
         <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+
+        <button
+          onClick={onLogout}
+          className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm text-red-600 shadow-sm hover:bg-red-50 dark:border-red-800 dark:bg-slate-900 dark:hover:bg-red-950 transition-colors"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -1,11 +1,18 @@
-const API_URL = "https://69b30b45e224ec066bdb55a0.mockapi.io/api/v1/cdr";
+import axios from "axios";
 
-export async function fetchCDRData() {
-  const response = await fetch(API_URL);
+const API = axios.create({
+baseURL: "https://telecomanalyticsapi-production.up.railway.app/api"
+});
 
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.status}`);
+API.interceptors.request.use((config) => {
+
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return response.json();
-}
+  return config;
+});
+
+export default API;

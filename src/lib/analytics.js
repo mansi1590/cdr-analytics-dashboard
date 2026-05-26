@@ -24,8 +24,13 @@ export function calculateKPIs(data) {
   
   const avgDuration = totalDuration / totalCalls;
   
-  const successfulCalls = data.filter(call => call.callStatus === true).length;
-  const failedCalls = totalCalls - successfulCalls;
+const successfulCalls = data.filter(
+  x => x.callstatus === 1
+).length;
+
+const failedCalls = data.filter(
+  x => x.callstatus === 0
+).length;
 
   return {
     totalCalls,
